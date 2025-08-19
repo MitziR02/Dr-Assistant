@@ -3,10 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr Asistente - Tu asistente personal para el seguimiento de salud y síntomas">
+    <meta name="author" content="Dr Assistant">
+    <meta name="robots" content="noindex, nofollow">
     <title>Dr Asistente</title>
+    
+    <link rel="icon" type="image/x-icon" href="public/favicon-100x100.ico">
+
+    <link rel="stylesheet" href="src/css/main.css">
 </head>
 <body>
     
-    
+    <section class="welcome-section">
+        <img src="public/logo-app.png" alt="Logo de Dr Asistente">
+        <h1>Bienvenido a Dr Asistente</h1>
+        <p>Tu asistente personal para la salud</p>
+    </section>
+
+    <section class="login-register-section">
+        <div class="login-register-button">
+            <button type="button">Registrarse</button>
+            <button type="button">Iniciar sesión</button>
+        </div>
+
+        <div class="register-form-container">
+            <form class="register-form">
+
+                <input type="text" 
+                       id="register-name" 
+                       name="name" 
+                       placeholder="Ingresa tu nombre" 
+                       required 
+                       autocomplete="name"
+                       maxlength="50">
+
+                <input type="email" 
+                       id="register-email" 
+                       name="email" 
+                       placeholder="Ingresa tu correo" 
+                       required 
+                       autocomplete="email">
+
+                <input type="password" 
+                       id="register-password" 
+                       name="password" 
+                       placeholder="Ingresa tu contraseña" 
+                       required 
+                       autocomplete="new-password"
+                       minlength="8">
+
+                <button type="button">Cancelar</button>
+                <button type="submit">Registrarse</button>
+            </form>
+        </div>
+
+        <div id="login-form" class="register-form-container">
+            <form class="register-form">
+                
+                <input type="email" 
+                       id="login-email" 
+                       name="email" 
+                       placeholder="Ingresa tu correo" 
+                       required 
+                       autocomplete="email">
+
+                <input type="password" 
+                       id="login-password" 
+                       name="password" 
+                       placeholder="Ingresa tu contraseña" 
+                       required 
+                       autocomplete="current-password">
+
+                <button type="button">Cancelar</button>
+                <button class="submit-button" type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+    </section>        
 </body>
 </html>

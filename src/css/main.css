@@ -1,0 +1,19 @@
+/* Importaciones */
+@import url('reset.css');
+@import url('variables.css');
+@import url('index.css');
+
+/* Estilos generales */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 100vh;
+    width: 100vw;
+
+    font-family: var(--font-title);
+    background-color: var(--color-secondary);
+    color: var(--color-tertiary);
+}
