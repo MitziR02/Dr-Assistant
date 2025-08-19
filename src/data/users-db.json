@@ -1,0 +1,104 @@
+{
+  "users": [
+    {
+      "id": "user-001",
+      "name": "Usuario Demo",
+      "email": "demo@drasistente.com",
+      "password": "demo123456",
+      "createdAt": "2025-08-19T10:30:00Z",
+      "isActive": true,
+      "profile": {
+        "height": 170,
+        "weight": 70,
+        "chronicConditions": [
+          "Hipertensión"
+        ],
+        "allergies": [
+          "Penicilina",
+          "Polen"
+        ],
+        "bloodType": "O+",
+        "emergencyContact": {
+          "name": "María González",
+          "phone": "+1234567890",
+          "relationship": "Hermana"
+        }
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "id": "condition-001",
+      "userId": "user-001",
+      "name": "Dolor de cabeza recurrente",
+      "description": "Dolores de cabeza que aparecen por las tardes",
+      "startDate": "2025-08-10",
+      "status": "active",
+      "isCured": false,
+      "createdAt": "2025-08-10T14:30:00Z",
+      "updatedAt": "2025-08-18T09:15:00Z"
+    }
+  ],
+  "symptoms": [
+    {
+      "id": "symptom-001",
+      "conditionId": "condition-001",
+      "name": "Dolor punzante",
+      "description": "Dolor punzante en la sien derecha",
+      "createdAt": "2025-08-10T14:30:00Z"
+    },
+    {
+      "id": "symptom-002", 
+      "conditionId": "condition-001",
+      "name": "Sensibilidad a la luz",
+      "description": "Molestia con luces brillantes",
+      "createdAt": "2025-08-12T16:20:00Z"
+    }
+  ],
+  "symptomRecords": [
+    {
+      "id": "record-001",
+      "symptomId": "symptom-001",
+      "intensity": 7,
+      "notes": "Dolor intenso después del trabajo",
+      "recordDate": "2025-08-10T18:00:00Z"
+    },
+    {
+      "id": "record-002",
+      "symptomId": "symptom-001", 
+      "intensity": 5,
+      "notes": "Mejoró después de descansar",
+      "recordDate": "2025-08-11T19:30:00Z"
+    },
+    {
+      "id": "record-003",
+      "symptomId": "symptom-002",
+      "intensity": 8,
+      "notes": "Muy molesto en la oficina con luz fluorescente",
+      "recordDate": "2025-08-12T16:30:00Z"
+    },
+    {
+      "id": "record-004",
+      "symptomId": "symptom-001",
+      "intensity": 3,
+      "notes": "Dolor leve, tomé ibuprofeno",
+      "recordDate": "2025-08-18T09:00:00Z"
+    }
+  ],
+  "conditionUpdates": [
+    {
+      "id": "update-001",
+      "conditionId": "condition-001",
+      "updateType": "improvement",
+      "description": "Los dolores han disminuido en intensidad",
+      "date": "2025-08-18T09:15:00Z"
+    },
+    {
+      "id": "update-002",
+      "conditionId": "condition-001", 
+      "updateType": "new_symptom",
+      "description": "Agregado nuevo síntoma: sensibilidad a la luz",
+      "date": "2025-08-12T16:20:00Z"
+    }
+  ]
+}
