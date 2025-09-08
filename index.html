@@ -13,71 +13,79 @@
     <link rel="stylesheet" href="src/css/main.css">
 </head>
 <body>
-    
-    <section class="welcome-section">
-        <img src="public/logo-app.png" alt="Logo de Dr Asistente">
-        <h1>Bienvenido a Dr Asistente</h1>
-        <p>Tu asistente personal para la salud</p>
-    </section>
+    <div class="app-container">
+        <main class="auth-container">
 
-    <section class="login-register-section">
-        <div class="login-register-button">
-            <button type="button">Registrarse</button>
-            <button type="button">Iniciar sesión</button>
-        </div>
+            <!-- Header con logo y título -->
+            <header class="auth-header">
+                <img class="logo" src="public/medical-app.png" alt="Dr Asistente Logo">
+                <h1>Dr Asistente</h1>
+                <p>Tu asistente personal para el seguimiento de salud</p>
+            </header>
 
-        <div class="register-form-container">
-            <form class="register-form">
+            <section class="auth-section">
 
-                <input type="text" 
-                       id="register-name" 
-                       name="name" 
-                       placeholder="Ingresa tu nombre" 
-                       required 
-                       autocomplete="name"
-                       maxlength="50">
+                <!-- Switch entre Login y Register -->
+                <div class="auth-switch">
+                    <button id="loginSwitch" class="switch-btn">Iniciar Sesión</button>
+                    <button id="registerSwitch" class="switch-btn">Registrarse</button>
+                </div>
 
-                <input type="email" 
-                       id="register-email" 
-                       name="email" 
-                       placeholder="Ingresa tu correo" 
-                       required 
-                       autocomplete="email">
+                <!-- Formulario de Login -->
+                <form id="loginForm" class="auth-form inactive">
+                    <h2>Iniciar Sesión</h2>
+                    
+                    <div class="form-group">
+                        <label for="loginEmail">Correo electrónico</label>
+                        <input type="email" id="loginEmail" name="email" required>
+                    </div>
 
-                <input type="password" 
-                       id="register-password" 
-                       name="password" 
-                       placeholder="Ingresa tu contraseña" 
-                       required 
-                       autocomplete="new-password"
-                       minlength="8">
+                    <div class="form-group">
+                        <label for="loginPassword">Contraseña</label>
+                        <input type="password" id="loginPassword" name="password" required>
+                    </div>
 
-                <button type="button">Cancelar</button>
-                <button type="submit">Registrarse</button>
-            </form>
-        </div>
+                    <button type="submit" class="btn-primary">Iniciar Sesión</button>
 
-        <div id="login-form" class="register-form-container">
-            <form class="register-form">
-                
-                <input type="email" 
-                       id="login-email" 
-                       name="email" 
-                       placeholder="Ingresa tu correo" 
-                       required 
-                       autocomplete="email">
+                    <!-- Botón de cuenta demo -->
+                    <button type="button" id="demoLogin" class="btn-demo">
+                        🩺 Usar cuenta demo
+                    </button>
+                </form>
 
-                <input type="password" 
-                       id="login-password" 
-                       name="password" 
-                       placeholder="Ingresa tu contraseña" 
-                       required 
-                       autocomplete="current-password">
+                <!-- Formulario de Register -->
+                <form id="registerForm" class="auth-form active">
+                    <h2>Crear Cuenta</h2>
+                    
+                    <div class="form-group">
+                        <label for="registerName">Nombre completo</label>
+                        <input type="text" id="registerName" name="name" required>
+                    </div>
 
-                <button type="button">Cancelar</button>
-                <button class="submit-button" type="submit">Iniciar sesión</button>
-            </form>
-        </div>
-    </section>        
+                    <div class="form-group">
+                        <label for="registerEmail">Correo electrónico</label>
+                        <input type="email" id="registerEmail" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">Contraseña</label>
+                        <input type="password" id="registerPassword" name="password" required minlength="6">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirmar contraseña</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Crear Cuenta</button>
+                </form>
+
+                <!-- Mensajes de error/éxito -->
+                <div id="messageContainer" class="message-container"></div>
+            </section>
+        </main>
+    </div>
+    <!-- Scripts -->
+    <script src="src/js/auth.js"></script>
 </body>
 </html>

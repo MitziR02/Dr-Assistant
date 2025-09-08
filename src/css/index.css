@@ -1,163 +1,135 @@
-/* Sección de bienvenida */
-.welcome-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+body {
     justify-content: center;
-    height: 45%;
 }
 
-.welcome-section img {
-    width: 12rem;
-    opacity: 0;
-    animation: fadeIn 1.5s ease-in-out forwards;
-    margin: 0.5em 0.5em;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.welcome-section h1 {
-    font-size: 2rem;
-    color: var(--color-primary);
-    margin: 0.5rem 0.8rem;
-    text-align: center;
-    opacity: 0;
-    animation: slideInLeft 1s ease-out forwards;
-    animation-delay: 1.8s;
-}
-
-.welcome-section p {
-    font-size: 1.2rem;
-    color: var(--color-tertiary);
-    text-align: center;
-    margin: 0.5em 1em;
-    opacity: 0;
-    animation: slideInRight 1s ease-out forwards;
-    animation-delay: 2.3s;
-}
-
-/* Sección de inicio de sesión y registro */
-
-.login-register-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.app-container {
     justify-content: center;
-
-    height: 53%;
-    width: 100%;
-    background: linear-gradient(180deg, #27ACDB, #161D6A);
-    border-top-left-radius: 2rem;
-    border-top-right-radius: 2rem;
-
-    opacity: 0;
-    animation: fadeIn 1.5s ease-in-out forwards;
-    animation-delay: 0.8s;
 }
 
-.login-register-button {
+.auth-container {
+    width: 90%;
+    height: 90%;
+}
+
+.auth-header {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     align-items: center;
+    justify-content: space-around;
+}
 
-    height: 80%;
+.logo {
+    width: 70%;
+}
+
+.auth-header h1 {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+
+.auth-header p {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+    text-align: center;
     width: 80%;
 }
 
-.login-register-button button{
-    width: 70%;
-    height: 15%;
-    border: none;
-    border-radius: 1em;
-    background-color: white;
-    cursor: pointer;
-    font-family: var(--font-title);
-}
-
-.login-register-button button:hover {
-    color: var(--color-primary);
-    scale: 1.10;
-    transition: 0.2s;
-}
-
-.register-form-container {
-    display: none;
-    align-items: center;
-    width: 90%; 
-    height: 90%; 
-    padding: 1rem; 
-}
-
-.register-form-container form {
+.auth-section {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
+    
+    padding: 1rem;
+    margin-top: 1.5rem;
+
+    background: rgba(255, 255, 255, 0.2); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+.auth-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     width: 100%;
-    height: 100%;
 }
 
-.register-form input{
-    width: 90%;
-    height: 2.5vh;
+.auth-switch button {
+    width: 45%;
     border: none;
-    border-radius: 2rem;
-    padding: 1rem;
-}
-
-.register-form button{
-    width: 40%;
-    height: 4vh;
-    border: none;
-    border-radius: 1em;
+    background: var(--color-primary);
+    font-size: 1rem;
+    font-weight: 400;
     cursor: pointer;
-    background: white;
-    color: var(--color-primary);
+    padding: .3rem;
+    margin: 1rem 0 1.5rem 0;
+    color: white;
+    border-radius: 1rem 0 0 1rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.register-form button[type="submit"] {
+.auth-switch button:last-child {
+    border-radius: 0 1rem 1rem 0;
+    background: var(--color-secondary);
+}
+
+.auth-form {
+    width: 90%;
+}
+
+.auth-form h2 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.auth-form button {
+    width: 100%;
+    padding: .5rem;
+    border-radius: 1rem;
+    border: none;
+    margin-bottom: 1rem;
     background: var(--color-primary);
     color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.register-form button:hover {
-    scale: 1.05;
-    transition: 0.2s;
+.auth-form button:last-child {
+    background: var(--color-secondary);
 }
 
-#login-form {
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+}
+
+.form-group input {
+    padding: .5rem;
+    border-radius: 1rem;
+    border: none;
+    margin-bottom: 1rem;
+}
+
+
+/* Inactive */
+.inactive {
     display: none;
 }

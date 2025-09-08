@@ -4,9 +4,9 @@
 :root {
 
     /* Colores */
-    --color-primary: #0F969C;
-    --color-secondary: #fff;
-    --color-tertiary: #040513;
+    --color-primary: #a2d2ff;
+    --color-secondary: #cdb4db;
+    --color-tertiary: #bde0fe;
 
     /* Tipografía */
     --font-title:  "Montserrat", sans-serif;
