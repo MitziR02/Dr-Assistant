@@ -2,13 +2,14 @@
 @import url('reset.css');
 @import url('variables.css');
 @import url('index.css');
+@import url('dashboard.css');
 
 /* Estilos generales */
 body {
     display: flex;  
-    align-items: center;
+    align-items: flex-start;
 
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
 
     font-family: var(--font-title);
@@ -19,13 +20,14 @@ body {
 
 .app-container {
     display: flex;  
-    align-items: center;
+    align-items: flex-start;
 
     width: 100%;
     max-width: 380px; /* tamaño típico de móvil */
-    min-height: 90vh;
+    min-height: 100vh;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
     border-radius: 1rem;
+    margin: 2rem;
 
     background: linear-gradient(135deg, rgba(163,217,249,1) 0%, rgba(225, 198, 251, 0.9) 50%, rgba(189, 240, 242, 0.8) 100%);
 }

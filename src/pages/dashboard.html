@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr Asistente - Dashboard personal para seguimiento de salud">
+    <meta name="author" content="Dr Assistant">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Dashboard - Dr Asistente</title>
+    
+    <link rel="icon" type="image/x-icon" href="../../public/favicon-100x100.ico">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="dashboard-container">
+            
+            <!-- Header con logo, home y botón de registro de síntomas -->
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <img class="logo" src="../../public/medical-app.png" alt="Dr Asistente Logo">
+                    <h1>Dr Asistente</h1>
+                </div>
+                <nav class="header-nav">
+                    <img class="nav-icon" src="../../public/home-icon.svg" alt="Home" class="nav-icon">
+                    <img class="nav-icon" src="../../public/add-icon.svg" alt="Register Symptom" class="nav-icon">
+                    <img class="nav-icon" src="../../public/exit-icon.svg" alt="Exit" class="nav-icon">
+                </nav>
+            </header>
+
+            <!-- Bienvenida con nombre dinámico -->
+            <section class="welcome-section">
+                <h2 id="welcomeMessage">¡Bienvenido!</h2>
+                <p class="welcome-subtitle">Tu salud es nuestra prioridad</p>
+            </section>
+
+            <!-- Acción principal: botón para registrar padecimiento nuevo -->
+            <section class="main-action-section">
+                <div class="action-card">
+                    <div class="action-icon">🩺</div>
+                    <h3>Registrar Nuevo Padecimiento</h3>
+                    <p>Documenta un nuevo síntoma o condición médica</p>
+                    <button id="newConditionBtn" class="btn-primary btn-large">
+                        + Nuevo Registro
+                    </button>
+                </div>
+            </section>
+
+            <!-- Recordatorios para padecimientos crónicos -->
+            <section class="reminders-section">
+                <h3>Recordatorios de Salud</h3>
+                <div id="chronicReminders" class="reminders-container">
+                    <!-- Se llenará dinámicamente con datos del JSON -->
+                </div>
+            </section>
+
+            <!-- Último registro activo de síntomas -->
+            <section class="latest-records-section">
+                <h3>Últimos Registros de Síntomas</h3>
+                <div id="latestRecords" class="records-container">
+                    <!-- Se llenará dinámicamente con datos del JSON -->
+                </div>
+                <button id="viewAllRecordsBtn" class="btn-secondary">Ver Todos los Registros</button>
+            </section>
+
+            <!-- Mensajes de estado -->
+            <div id="messageContainer" class="message-container"></div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>
