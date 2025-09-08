@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr Asistente - Registrar nuevo padecimiento y síntomas">
+    <meta name="author" content="Dr Assistant">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Registrar Padecimiento - Dr Asistente</title>
+    
+    <link rel="icon" type="image/x-icon" href="../../public/favicon-100x100.ico">
+    <link rel="stylesheet" href="../css/main.css">
+    
+</head>
+<body>
+    <div class="app-container">
+        <main class="dashboard-container">
+            
+            <!-- Header con navegación -->
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <img class="logo" src="../../public/medical-app.png" alt="Dr Asistente Logo">
+                    <h1>Dr Asistente</h1>
+                </div>
+                <nav class="header-nav">
+                    <a href="dashboard.html">
+                        <img class="nav-icon" src="../../public/home-icon.svg" alt="Home" class="nav-icon">
+                    </a>
+                    <img class="nav-icon active" src="../../public/add-icon.svg" alt="Register Symptom" class="nav-icon">
+                    <img class="nav-icon" src="../../public/exit-icon.svg" alt="Exit" class="nav-icon">
+                </nav>
+            </header>
+
+            <!-- Título de la página -->
+            <section class="welcome-section">
+                <h2>Registrar Nuevo Padecimiento</h2>
+                <p class="welcome-subtitle">Documenta tu condición médica y síntomas</p>
+            </section>
+
+            <!-- Formulario principal -->
+            <form id="conditionForm" class="condition-form">
+                
+                <!-- Información del padecimiento -->
+                <section class="form-section">
+                    <h3>Información del Padecimiento</h3>
+                    
+                    <div class="form-group">
+                        <label for="conditionName">Nombre del padecimiento *</label>
+                        <input 
+                            type="text" 
+                            id="conditionName" 
+                            name="conditionName" 
+                            placeholder="Ej: Dolor de cabeza recurrente"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="conditionDescription">Descripción</label>
+                        <textarea 
+                            id="conditionDescription" 
+                            name="conditionDescription" 
+                            placeholder="Describe brevemente tu padecimiento..."
+                            rows="3"
+                        ></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startDate">Fecha de inicio *</label>
+                        <input 
+                            type="date" 
+                            id="startDate" 
+                            name="startDate" 
+                            required
+                        >
+                    </div>
+                </section>
+
+                <!-- Síntomas -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <h3>Síntomas</h3>
+                        <img id="addSymptomBtn" src="../../public/add-full-icon.svg" alt="Add Symptom" class="add-icon">
+                    </div>
+
+                    <div id="symptomsContainer" class="symptoms-container">
+                        <!-- Los síntomas se agregarán dinámicamente aquí -->
+                    </div>
+                </section>
+
+                <!-- Botones de acción -->
+                <section class="form-actions">
+                    <button type="button" id="cancelBtn" class="btn-secondary">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="saveBtn" class="btn-primary">
+                        Guardar Padecimiento
+                    </button>
+                </section>
+            </form>
+
+            <!-- Mensajes de estado -->
+            <div id="messageContainer" class="message-container"></div>
+        </main>
+    </div>
+
+    <!-- Template para síntomas -->
+    <template id="symptomTemplate">
+        <div class="symptom-card" data-symptom-index="">
+            <div class="symptom-header">
+                <h4>Síntoma <span class="symptom-number">1</span></h4>
+                <button type="button" class="remove-symptom-btn" title="Eliminar síntoma">
+                    ✕
+                </button>
+            </div>
+            
+            <div class="form-group">
+                <label>Síntoma *</label>
+                <input 
+                    type="text" 
+                    name="symptomName" 
+                    placeholder="Ej: Dolor punzante, Náuseas, Fiebre..."
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Descripción del síntoma</label>
+                <textarea 
+                    name="symptomDescription" 
+                    placeholder="Describe el síntoma con más detalle..."
+                    rows="2"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Intensidad actual (1-10) *</label>
+                <div class="intensity-container">
+                    <div class="intensity-labels">
+                        <span>1</span>
+                        <span>5</span>
+                        <span>10</span>
+                    </div>
+                    <input 
+                        type="range" 
+                        name="symptomIntensity" 
+                        min="1" 
+                        max="10" 
+                        value="5" 
+                        class="intensity-slider"
+                        required
+                    >
+                    <div class="intensity-display">
+                        <span class="intensity-value">5</span>
+                        <span class="intensity-label">/ 10</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Notas adicionales</label>
+                <textarea 
+                    name="symptomNotes" 
+                    placeholder="¿Qué factores empeoran o mejoran el síntoma? ¿Cuándo aparece?"
+                    rows="2"
+                ></textarea>
+            </div>
+        </div>
+    </template>
+
+    <!-- Scripts -->
+    <script src="../js/add-symptoms.js"></script>
+</body>
+</html>

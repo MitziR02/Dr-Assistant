@@ -1,6 +1,7 @@
 # Archivos de autenticación (temporalmente ignorados)
 src/js/auth.js
 src/js/dashboard.js
+src/js/add-symptoms.js
 src/js/practice/
 
 # Archivos del sistema operativo

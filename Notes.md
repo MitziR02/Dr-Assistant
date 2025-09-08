@@ -16,4 +16,6 @@ JS
 - Verificar si son top 3 ultims registros o más
 - Agregar iconos de alimentacion y medicacion
 - Tips de un JSON en caso de padecimiento
+- Automaticamnete al cargar navega a los sintomas
+
 
