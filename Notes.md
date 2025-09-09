@@ -16,6 +16,18 @@ JS
 - Verificar si son top 3 ultims registros o más
 - Agregar iconos de alimentacion y medicacion
 - Tips de un JSON en caso de padecimiento
+- Modal de login
+
+#Agregar nuevos Sintomas
+
 - Automaticamnete al cargar navega a los sintomas
 
+#Historial de sintmas
+-Asegurar que 10 sea el limite
+-Agregar opcion de marcar como Curado / Inactivo
 
+
+# A mejorar  [Readme]
+- Una clase para el estilo de cartas transparentes [reutilizar en main]
+- Mejorar modales usando otra propiedad [A testear]
+- Revisar y corregir btn primarios y secundarios de las forms

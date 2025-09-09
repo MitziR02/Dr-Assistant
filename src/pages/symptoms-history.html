@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr Asistente - Historial de síntomas y seguimiento médico">
+    <meta name="author" content="Dr Assistant">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Historial de Síntomas - Dr Asistente</title>
+    
+    <link rel="icon" type="image/x-icon" href="../../public/favicon-100x100.ico">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <div class="app-container">
+        <main class="symptoms-history-container">
+            
+            <!-- Header con logo, navegación y título -->
+            <header class="symptoms-history-header">
+                <div class="header-content">
+                    <img class="logo" src="../../public/medical-app.png" alt="Dr Asistente Logo">
+                    <h1>Dr Asistente</h1>
+                </div>
+                <nav class="header-nav">
+                    <img class="nav-icon" src="../../public/home-icon.svg" alt="Home" class="nav-icon" id="homeBtn">
+                    <img class="nav-icon" src="../../public/add-icon.svg" alt="Register Symptom" class="nav-icon" id="addSymptomBtn">
+                    <img class="nav-icon" src="../../public/exit-icon.svg" alt="Exit" class="nav-icon" id="exitBtn">
+                </nav>
+            </header>
+
+            <!-- Título de la página -->
+            <section class="page-title-section">
+                <h2>Historial de Síntomas</h2>
+                <p class="page-subtitle">Seguimiento y evolución de tus padecimientos activos</p>
+            </section>
+
+            <!-- Filtros y controles -->
+            <section class="filters-section">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="conditionFilter">Filtrar por condición:</label>
+                        <select id="conditionFilter" class="filter-select">
+                            <option value="all">Todas las condiciones</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="dateRangeFilter">Rango de fechas:</label>
+                        <select id="dateRangeFilter" class="filter-select">
+                            <option value="all">Todo el tiempo</option>
+                            <option value="week">Última semana</option>
+                            <option value="month">Último mes</option>
+                            <option value="3months">Últimos 3 meses</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contenido principal: Timeline de síntomas -->
+            <section class="timeline-section">
+                <div id="timelineContainer" class="timeline-container">
+                    <!-- Se llenará dinámicamente con la línea de tiempo -->
+                </div>
+                
+                <!-- Mensaje cuando no hay datos -->
+                <div id="noDataMessage" class="no-data-message" style="display: none;">
+                    <div class="no-data-icon">📋</div>
+                    <h3>No hay registros activos</h3>
+                    <p>No tienes padecimientos activos registrados en este momento.</p>
+                    <button id="addFirstSymptomBtn" class="btn-primary">Registrar Primer Síntoma</button>
+                </div>
+            </section>
+
+            <!-- Modal para editar registro -->
+            <div id="editModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Editar Registro</h3>
+                        <button class="modal-close" id="closeModalBtn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editRecordForm">
+                            <div class="form-group">
+                                <label for="editIntensity">Intensidad (1-10):</label>
+                                <input type="number" id="editIntensity" min="1" max="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editNotes">Notas:</label>
+                                <textarea id="editNotes" rows="4" placeholder="Describe cómo te sientes..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary" id="cancelEditBtn">Cancelar</button>
+                                <button type="submit" class="btn-primary">Guardar Cambios</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal para agregar nuevo registro -->
+            <div id="addRecordModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Nuevo Registro</h3>
+                        <button class="modal-close" id="closeAddModalBtn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="addRecordForm">
+                            <div class="form-group">
+                                <label for="addSymptomSelect">Síntoma:</label>
+                                <select id="addSymptomSelect" required>
+                                    <option value="">Selecciona un síntoma</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="addIntensity">Intensidad (1-10):</label>
+                                <input type="number" id="addIntensity" min="1" max="10" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="addNotes">Notas:</label>
+                                <textarea id="addNotes" rows="4" placeholder="Describe cómo te sientes..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn-secondary" id="cancelAddBtn">Cancelar</button>
+                                <button type="submit" class="btn-primary">Guardar Registro</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón flotante para agregar nuevo registro -->
+            <button id="floatingAddBtn" class="floating-add-btn" title="Agregar nuevo registro">
+                <span>+</span>
+            </button>
+
+            <!-- Mensajes de estado -->
+            <div id="messageContainer" class="message-container"></div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/symptoms-history.js"></script>
+</body>
+</html>

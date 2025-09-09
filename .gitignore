@@ -3,6 +3,7 @@ src/js/auth.js
 src/js/dashboard.js
 src/js/add-symptoms.js
 src/js/practice/
+src/js/symptoms-history.js
 
 # Archivos del sistema operativo
 .DS_Store
