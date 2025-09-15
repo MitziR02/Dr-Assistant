@@ -23,7 +23,7 @@
                 </div>
                 <nav class="header-nav">
                     <img class="nav-icon" src="../../public/home-icon.svg" alt="Home" class="nav-icon">
-                    <img class="nav-icon" src="../../public/add-icon.svg" alt="Register Symptom" class="nav-icon">
+                    <a href="add-symptoms.html"><img class="nav-icon" src="../../public/add-icon.svg" alt="Register Symptom" class="nav-icon"></a>
                     <img class="nav-icon" src="../../public/exit-icon.svg" alt="Exit" class="nav-icon">
                 </nav>
             </header>
@@ -60,15 +60,24 @@
                 <div id="latestRecords" class="records-container">
                     <!-- Se llenará dinámicamente con datos del JSON -->
                 </div>
-                <button id="viewAllRecordsBtn" class="btn-secondary">Ver Todos los Registros</button>
+                <a href="symptoms-history.html"><button id="viewAllRecordsBtn" class="btn-secondary">Ver Todos los Registros</button></a>
             </section>
 
             <!-- Mensajes de estado -->
             <div id="messageContainer" class="message-container"></div>
+            
+            <!-- Icono de carga -->
+            <div id="loadingOverlay" class="loading-overlay">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Cargando datos...</p>
+                </div>
+            </div>
         </main>
     </div>
 
     <!-- Scripts -->
+    <script src="../js/auth.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
 </html>

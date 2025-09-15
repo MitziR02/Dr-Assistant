@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "user-001",
-      "name": "Usuario Demo",
+      "name": "Demo",
       "email": "demo@drasistente.com",
       "password": "demo123456",
       "createdAt": "2025-08-19T10:30:00Z",
