@@ -1,9 +1,10 @@
 # Archivos de autenticación (temporalmente ignorados)
-src/js/auth.js
 src/js/dashboard.js
 src/js/add-symptoms.js
 src/js/practice/
 src/js/symptoms-history.js
+INFORME_PROYECTO_DR_ASSISTANT.md
+Notes.md
 
 # Archivos del sistema operativo
 .DS_Store
