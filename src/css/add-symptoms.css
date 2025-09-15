@@ -1,13 +1,14 @@
-/* Estilos específicos para la página de agregar síntomas */
+/* Estilos específicos para la página de agregar síntomas - Mobile First */
 
 /* Formulario principal */
 .condition-form {
+    width: 100%;
     max-width: 100%;
 }
 
 .form-section {
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
     
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(15px);
@@ -19,9 +20,28 @@
 
 .form-section h3 {
     font-family: var(--font-title);
-    font-size: 1.2rem;
+    font-size: var(--font-lg);
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .condition-form {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .form-section {
+        padding: var(--spacing-xl);
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .condition-form {
+        max-width: 800px;
+    }
 }
 
 .section-header {
@@ -35,34 +55,45 @@
     margin-bottom: 0;
 }
 
-/* Grupos de formulario */
+/* Grupos de formulario - Mobile First */
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-lg);
 }
 
 .form-group label {
     font-family: var(--font-title);
     font-weight: 500;
     color: #333;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-sm);
+    display: block;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    min-height: 2rem;
-    padding: 0.75rem;
+    min-height: 44px; /* Tamaño mínimo táctil */
+    padding: var(--spacing-md);
     border: 2px solid #e0e0e0;
     border-radius: 0.5rem;
     font-family: var(--font-text);
-    font-size: 1rem;
+    font-size: 16px; /* Evita zoom en iOS */
     transition: border-color 0.3s ease;
     box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .form-group textarea {
-    min-height: 4rem;
+    min-height: 6rem;
+    resize: vertical;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .form-group input,
+    .form-group textarea {
+        font-size: var(--font-base);
+    }
 }
 
 .form-group input:focus,
@@ -136,11 +167,16 @@
     color: white;
     border: none;
     border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    min-width: 44px; /* Tamaño mínimo táctil */
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;  
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .remove-symptom-btn:hover {
@@ -167,7 +203,7 @@
 .intensity-slider {
     -webkit-appearance: none;
     appearance: none;
-    height: 1.3rem;
+    height: 1.5rem; /* Más alto para mejor táctil */
     border-radius: .5rem;
     border: none;
     background: linear-gradient(to right, 
@@ -178,13 +214,15 @@
     outline: none;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 100%;
+    margin: var(--spacing-sm) 0;
 }
 
 .intensity-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem; /* Más grande para mejor táctil */
+    height: 2rem;
     border-radius: 50%;
     background: white;
     border: 3px solid var(--color-primary);
@@ -199,8 +237,8 @@
 }
 
 .intensity-slider::-moz-range-thumb {
-    width: 1.8rem;
-    height: 1.8rem;
+    width: 2rem; /* Más grande para mejor táctil */
+    height: 2rem;
     border-radius: 50%;
     background: white;
     border: 3px solid var(--color-primary);
@@ -229,19 +267,44 @@
     font-family: var(--font-text);
 }
 
-/* Botones de acción */
+/* Botones de acción - Mobile First */
 .form-actions {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    gap: var(--spacing-md);
     justify-content: center;
-    padding: 1.5rem;
+    padding: var(--spacing-lg);
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
-    margin-top: 1rem;
+    margin-top: var(--spacing-md);
+}
+
+.form-actions button {
+    min-height: 44px; /* Tamaño mínimo táctil */
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-base);
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+    .form-actions {
+        flex-direction: row;
+        gap: var(--spacing-lg);
+    }
+    
+    .form-actions button {
+        flex: 1;
+        max-width: 200px;
+    }
 }
 
 
@@ -279,3 +342,4 @@
         transform: translateY(0);
     }
 }
+

@@ -31,3 +31,4 @@ JS
 - Una clase para el estilo de cartas transparentes [reutilizar en main]
 - Mejorar modales usando otra propiedad [A testear]
 - Revisar y corregir btn primarios y secundarios de las forms
+- Optimizar estilos reutilizables

@@ -102,7 +102,6 @@
     text-align: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 300px;
 }
 
 .action-icon {
@@ -335,39 +334,6 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-/* Mensajes */
-.message-container {
-    position: fixed;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    max-width: 90%;
-}
-
-.message {
-    padding: 1rem 1.5rem;
-    border-radius: 0.8rem;
-    font-weight: 500;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.message-info {
-    background: rgba(33, 150, 243, 0.9);
-    color: white;
-}
-
-.message-error {
-    background: rgba(244, 67, 54, 0.9);
-    color: white;
-}
-
-.message-success {
-    background: rgba(76, 175, 80, 0.9);
-    color: white;
-}
 
 /* Responsive design */
 @media (min-width: 768px) {
