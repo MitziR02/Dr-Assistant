@@ -385,16 +385,16 @@ class DataManager {
     /**
      * Agrega un nuevo registro de intensidad para un síntoma
      */
-    async addSymptomRecord(symptomId, recordData) {
+    async addSymptomRecord(recordData) {
         try {
             const data = await this.loadData();
             
             const newRecord = {
-                id: `record-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                symptomId: symptomId,
+                id: recordData.id || `record-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                symptomId: recordData.symptomId,
                 intensity: recordData.intensity,
                 notes: recordData.notes,
-                recordDate: new Date().toISOString()
+                recordDate: recordData.recordDate || new Date().toISOString()
             };
             
             data.symptomRecords.push(newRecord);
@@ -402,6 +402,34 @@ class DataManager {
             return newRecord;
         } catch (error) {
             console.error('Error agregando registro de síntoma:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Actualiza un registro de síntoma existente
+     */
+    async updateSymptomRecord(recordData) {
+        try {
+            const data = await this.loadData();
+            
+            const recordIndex = data.symptomRecords.findIndex(r => r.id === recordData.id);
+            if (recordIndex === -1) {
+                throw new Error('Registro de síntoma no encontrado');
+            }
+            
+            // Actualizar registro
+            data.symptomRecords[recordIndex] = {
+                ...data.symptomRecords[recordIndex],
+                intensity: recordData.intensity,
+                notes: recordData.notes,
+                recordDate: recordData.recordDate || new Date().toISOString()
+            };
+            
+            await this.saveData(data);
+            return data.symptomRecords[recordIndex];
+        } catch (error) {
+            console.error('Error actualizando registro de síntoma:', error);
             throw error;
         }
     }

@@ -256,6 +256,38 @@ class SecurityConfig {
             errors
         };
     }
+    
+    /**
+     * Valida estructura de datos de registro de síntoma
+     */
+    validateSymptomRecordData(data) {
+        const errors = [];
+        
+        if (!data || typeof data !== 'object') {
+            errors.push('Datos de registro inválidos');
+            return { isValid: false, errors };
+        }
+        
+        // Validar intensidad
+        if (!this.isValidIntensity(data.intensity)) {
+            errors.push('Intensidad debe ser un número entre 1 y 10');
+        }
+        
+        // Validar notas (opcional)
+        if (data.notes && !this.isSafeText(data.notes)) {
+            errors.push('Notas contienen caracteres no válidos');
+        }
+        
+        // Validar ID de síntoma si está presente
+        if (data.symptomId && !this.isValidId(data.symptomId)) {
+            errors.push('ID de síntoma inválido');
+        }
+        
+        return {
+            isValid: errors.length === 0,
+            errors
+        };
+    }
 }
 
 // Crear instancia global
