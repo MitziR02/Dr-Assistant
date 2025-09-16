@@ -8,7 +8,8 @@
 
 class DataManager {
     constructor() {
-        this.dataFile = '../../src/data/users-db.json';
+        // Detectar la ruta correcta según el entorno
+        this.dataFile = this.getDataFilePath();
         this.cache = null;
         this.cacheTimestamp = null;
         this.cacheTimeout = 30000; // 30 segundos
@@ -17,6 +18,22 @@ class DataManager {
         this.isProduction = false; // Cambiar a true en producción
         this.maxDataSize = 1024 * 1024; // 1MB límite para localStorage
         this.allowedDataTypes = ['string', 'number', 'boolean', 'object'];
+    }
+
+    /**
+     * Obtiene la ruta correcta del archivo de datos según el entorno
+     */
+    getDataFilePath() {
+        const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
+        
+        // Si estamos en un entorno desplegado, usar rutas absolutas
+        if (hostname !== 'localhost' && hostname !== '127.0.0.1' && protocol !== 'file:') {
+            return './src/data/users-db.json';
+        }
+        
+        // Para desarrollo local, usar ruta relativa
+        return '../../src/data/users-db.json';
     }
 
     /**
@@ -92,37 +109,57 @@ class DataManager {
                 throw new Error('En producción, use APIs seguras para datos médicos');
             }
 
-            // Intentar cargar desde localStorage primero (solo en desarrollo)
+            // Intentar cargar desde localStorage primero
             if (this.isLocalStorageSafe()) {
-                const localData = localStorage.getItem('drAssistantData');
-                if (localData) {
-                    // Validar tamaño de datos
-                    if (localData.length > this.maxDataSize) {
-                        console.warn('Datos demasiado grandes, limpiando caché');
-                        localStorage.removeItem('drAssistantData');
-                    } else {
-                        this.cache = JSON.parse(localData);
-                        this.cacheTimestamp = Date.now();
-                        return this.cache;
+                try {
+                    const localData = localStorage.getItem('drAssistantData');
+                    if (localData) {
+                        // Validar tamaño de datos
+                        if (localData.length > this.maxDataSize) {
+                            console.warn('Datos demasiado grandes, limpiando caché');
+                            localStorage.removeItem('drAssistantData');
+                        } else {
+                            this.cache = JSON.parse(localData);
+                            this.cacheTimestamp = Date.now();
+                            console.log('✅ Datos cargados desde localStorage');
+                            return this.cache;
+                        }
                     }
+                } catch (localError) {
+                    console.warn('Error cargando desde localStorage:', localError);
+                    // Continuar con la carga desde archivo
                 }
             }
 
             // Si no hay datos locales, cargar desde el archivo JSON
-            const response = await fetch(this.dataFile);
-            if (!response.ok) {
-                throw new Error(`Error cargando datos: ${response.status}`);
+            try {
+                const response = await fetch(this.dataFile);
+                if (!response.ok) {
+                    throw new Error(`Error cargando datos: ${response.status}`);
+                }
+                
+                this.cache = await response.json();
+                this.cacheTimestamp = Date.now();
+                
+                // Guardar en localStorage si es seguro
+                if (this.isLocalStorageSafe()) {
+                    localStorage.setItem('drAssistantData', JSON.stringify(this.cache));
+                }
+                
+                return this.cache;
+            } catch (fetchError) {
+                console.warn('No se pudo cargar desde archivo JSON:', fetchError);
+                // Si falla la carga del archivo, usar datos de ejemplo
+                this.cache = this.getDefaultData();
+                this.cacheTimestamp = Date.now();
+                
+                // Guardar datos de ejemplo en localStorage
+                if (this.isLocalStorageSafe()) {
+                    localStorage.setItem('drAssistantData', JSON.stringify(this.cache));
+                }
+                
+                return this.cache;
             }
-            
-            this.cache = await response.json();
-            this.cacheTimestamp = Date.now();
-            
-            // Guardar en localStorage solo en desarrollo
-            if (this.isLocalStorageSafe()) {
-                localStorage.setItem('drAssistantData', JSON.stringify(this.cache));
-            }
-            
-            return this.cache;
         } catch (error) {
             console.error('Error cargando datos:', error);
             // Retornar estructura vacía si hay error
@@ -153,8 +190,14 @@ class DataManager {
             
             // Solo guardar en localStorage si es seguro
             if (this.isLocalStorageSafe()) {
-                const dataString = JSON.stringify(data);
-                localStorage.setItem(securityConfig.LOCALSTORAGE_CONFIG.KEY, dataString);
+                try {
+                    const dataString = JSON.stringify(data);
+                    localStorage.setItem(securityConfig.LOCALSTORAGE_CONFIG.KEY, dataString);
+                    console.log('✅ Datos guardados en localStorage');
+                } catch (saveError) {
+                    console.warn('Error guardando en localStorage:', saveError);
+                    // Los datos se mantienen en caché aunque no se puedan guardar
+                }
             }
             
             return true;
@@ -479,6 +522,111 @@ class DataManager {
     }
 
     /**
+     * Retorna datos de ejemplo para cuando no se puede cargar el archivo JSON
+     */
+    getDefaultData() {
+        return {
+            users: [
+                {
+                    id: "user-001",
+                    name: "Demo",
+                    email: "demo@drasistente.com",
+                    password: "demo123456",
+                    createdAt: "2025-08-19T10:30:00Z",
+                    isActive: true,
+                    profile: {
+                        height: 170,
+                        weight: 70,
+                        chronicConditions: ["Hipertensión"],
+                        allergies: ["Penicilina", "Polen"],
+                        bloodType: "O+",
+                        emergencyContact: {
+                            name: "María González",
+                            phone: "+1234567890",
+                            relationship: "Hermana"
+                        }
+                    }
+                }
+            ],
+            conditions: [
+                {
+                    id: "condition-001",
+                    userId: "user-001",
+                    name: "Dolor de cabeza recurrente",
+                    description: "Dolores de cabeza que aparecen por las tardes",
+                    startDate: "2025-08-10",
+                    status: "active",
+                    isCured: false,
+                    createdAt: "2025-08-10T14:30:00Z",
+                    updatedAt: "2025-08-18T09:15:00Z"
+                }
+            ],
+            symptoms: [
+                {
+                    id: "symptom-001",
+                    conditionId: "condition-001",
+                    name: "Dolor punzante",
+                    description: "Dolor punzante en la sien derecha",
+                    createdAt: "2025-08-10T14:30:00Z"
+                },
+                {
+                    id: "symptom-002", 
+                    conditionId: "condition-001",
+                    name: "Sensibilidad a la luz",
+                    description: "Molestia con luces brillantes",
+                    createdAt: "2025-08-12T16:20:00Z"
+                }
+            ],
+            symptomRecords: [
+                {
+                    id: "record-001",
+                    symptomId: "symptom-001",
+                    intensity: 7,
+                    notes: "Dolor intenso después del trabajo",
+                    recordDate: "2025-08-10T18:00:00Z"
+                },
+                {
+                    id: "record-002",
+                    symptomId: "symptom-001", 
+                    intensity: 5,
+                    notes: "Mejoró después de descansar",
+                    recordDate: "2025-08-11T19:30:00Z"
+                },
+                {
+                    id: "record-003",
+                    symptomId: "symptom-002",
+                    intensity: 8,
+                    notes: "Muy molesto en la oficina con luz fluorescente",
+                    recordDate: "2025-08-12T16:30:00Z"
+                },
+                {
+                    id: "record-004",
+                    symptomId: "symptom-001",
+                    intensity: 3,
+                    notes: "Dolor leve, tomé ibuprofeno",
+                    recordDate: "2025-08-18T09:00:00Z"
+                }
+            ],
+            conditionUpdates: [
+                {
+                    id: "update-001",
+                    conditionId: "condition-001",
+                    updateType: "improvement",
+                    description: "Los dolores han disminuido en intensidad",
+                    date: "2025-08-18T09:15:00Z"
+                },
+                {
+                    id: "update-002",
+                    conditionId: "condition-001", 
+                    updateType: "new_symptom",
+                    description: "Agregado nuevo síntoma: sensibilidad a la luz",
+                    date: "2025-08-12T16:20:00Z"
+                }
+            ]
+        };
+    }
+
+    /**
      * Limpia la caché
      */
     clearCache() {
@@ -497,6 +645,32 @@ class DataManager {
         } catch (error) {
             console.error('Error reseteando datos:', error);
             return false;
+        }
+    }
+
+    /**
+     * Inicializa datos por defecto si no existen
+     */
+    async initializeDefaultData() {
+        try {
+            const data = await this.loadData();
+            
+            // Si no hay datos o están vacíos, inicializar con datos por defecto
+            if (!data || 
+                !data.users || data.users.length === 0 ||
+                !data.conditions || data.conditions.length === 0) {
+                
+                console.log('🔄 Inicializando datos por defecto...');
+                const defaultData = this.getDefaultData();
+                await this.saveData(defaultData);
+                console.log('✅ Datos por defecto inicializados');
+                return defaultData;
+            }
+            
+            return data;
+        } catch (error) {
+            console.error('Error inicializando datos por defecto:', error);
+            return this.getDefaultData();
         }
     }
 }

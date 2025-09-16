@@ -28,6 +28,9 @@ class SymptomsHistoryManager {
             // Mostrar icono de carga
             this.showLoading();
             
+            this.updateLoadingText('Inicializando datos...');
+            await dataManager.initializeDefaultData();
+            
             this.updateLoadingText('Cargando datos de usuario...');
             await this.loadUserData();
             

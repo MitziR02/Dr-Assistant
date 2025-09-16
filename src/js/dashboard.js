@@ -33,6 +33,9 @@ class DashboardManager {
                 return;
             }
 
+            this.updateLoadingText('Inicializando datos...');
+            await dataManager.initializeDefaultData();
+            
             this.updateLoadingText('Cargando datos de usuario...');
             await this.loadUserData();
             

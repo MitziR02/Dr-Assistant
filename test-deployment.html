@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Despliegue - Dr Asistente</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        #testResults { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test de Despliegue - Dr Asistente</h1>
+        <p>Esta página verifica que la aplicación funcione correctamente en el entorno desplegado.</p>
+        
+        <div>
+            <button onclick="runAllTests()">Ejecutar Todas las Pruebas</button>
+            <button onclick="clearResults()">Limpiar Resultados</button>
+        </div>
+        
+        <div id="testResults"></div>
+    </div>
+
+    <!-- Scripts necesarios -->
+    <script src="src/js/security-config.js"></script>
+    <script src="src/js/data-manager.js"></script>
+
+    <script>
+        class DeploymentTester {
+            constructor() {
+                this.results = [];
+            }
+
+            log(message, type = 'info') {
+                const timestamp = new Date().toLocaleTimeString();
+                this.results.push({ message, type, timestamp });
+                this.displayResults();
+            }
+
+            displayResults() {
+                const container = document.getElementById('testResults');
+                container.innerHTML = this.results.map(result => 
+                    `<div class="test-result ${result.type}">
+                        <strong>[${result.timestamp}]</strong> ${result.message}
+                    </div>`
+                ).join('');
+            }
+
+            clear() {
+                this.results = [];
+                this.displayResults();
+            }
+
+            async testEnvironmentDetection() {
+                this.log('🔍 Probando detección de entorno...', 'info');
+                
+                try {
+                    const environment = securityConfig.detectEnvironment();
+                    const isProduction = securityConfig.IS_PRODUCTION;
+                    const isLocalStorageSafe = securityConfig.isLocalStorageSafe();
+                    
+                    this.log(`Entorno detectado: ${environment}`, 'info');
+                    this.log(`Es producción: ${isProduction}`, 'info');
+                    this.log(`localStorage seguro: ${isLocalStorageSafe}`, isLocalStorageSafe ? 'success' : 'warning');
+                    
+                    return { environment, isProduction, isLocalStorageSafe };
+                } catch (error) {
+                    this.log(`Error en detección de entorno: ${error.message}`, 'error');
+                    return null;
+                }
+            }
+
+            async testDataManager() {
+                this.log('📊 Probando DataManager...', 'info');
+                
+                try {
+                    // Probar carga de datos
+                    const data = await dataManager.loadData();
+                    this.log(`Datos cargados: ${data ? 'Sí' : 'No'}`, data ? 'success' : 'error');
+                    
+                    if (data) {
+                        this.log(`Usuarios: ${data.users ? data.users.length : 0}`, 'info');
+                        this.log(`Condiciones: ${data.conditions ? data.conditions.length : 0}`, 'info');
+                        this.log(`Síntomas: ${data.symptoms ? data.symptoms.length : 0}`, 'info');
+                        this.log(`Registros: ${data.symptomRecords ? data.symptomRecords.length : 0}`, 'info');
+                    }
+                    
+                    return data;
+                } catch (error) {
+                    this.log(`Error cargando datos: ${error.message}`, 'error');
+                    return null;
+                }
+            }
+
+            async testDataPersistence() {
+                this.log('💾 Probando persistencia de datos...', 'info');
+                
+                try {
+                    // Crear datos de prueba
+                    const testData = {
+                        users: [{ id: 'test-user', name: 'Usuario Test' }],
+                        conditions: [],
+                        symptoms: [],
+                        symptomRecords: [],
+                        conditionUpdates: []
+                    };
+                    
+                    // Intentar guardar
+                    const saveResult = await dataManager.saveData(testData);
+                    this.log(`Datos guardados: ${saveResult ? 'Sí' : 'No'}`, saveResult ? 'success' : 'error');
+                    
+                    // Intentar cargar de nuevo
+                    const loadedData = await dataManager.loadData();
+                    const hasTestUser = loadedData && loadedData.users && 
+                        loadedData.users.some(user => user.id === 'test-user');
+                    
+                    this.log(`Datos persistidos: ${hasTestUser ? 'Sí' : 'No'}`, hasTestUser ? 'success' : 'error');
+                    
+                    return { saveResult, hasTestUser };
+                } catch (error) {
+                    this.log(`Error en persistencia: ${error.message}`, 'error');
+                    return null;
+                }
+            }
+
+            async testLocalStorage() {
+                this.log('🗄️ Probando localStorage...', 'info');
+                
+                try {
+                    const testKey = 'dr-assistant-test';
+                    const testValue = 'test-value';
+                    
+                    // Intentar escribir
+                    localStorage.setItem(testKey, testValue);
+                    this.log('Escritura en localStorage: OK', 'success');
+                    
+                    // Intentar leer
+                    const readValue = localStorage.getItem(testKey);
+                    this.log(`Lectura de localStorage: ${readValue === testValue ? 'OK' : 'Error'}`, 
+                        readValue === testValue ? 'success' : 'error');
+                    
+                    // Limpiar
+                    localStorage.removeItem(testKey);
+                    this.log('Limpieza de localStorage: OK', 'success');
+                    
+                    return true;
+                } catch (error) {
+                    this.log(`Error con localStorage: ${error.message}`, 'error');
+                    return false;
+                }
+            }
+
+            async testJSONLoading() {
+                this.log('📄 Probando carga de archivos JSON...', 'info');
+                
+                try {
+                    const response = await fetch('./src/data/users-db.json');
+                    this.log(`Archivo JSON accesible: ${response.ok ? 'Sí' : 'No'}`, 
+                        response.ok ? 'success' : 'warning');
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        this.log(`Datos JSON válidos: ${data ? 'Sí' : 'No'}`, data ? 'success' : 'error');
+                    }
+                    
+                    return response.ok;
+                } catch (error) {
+                    this.log(`Error cargando JSON: ${error.message}`, 'warning');
+                    return false;
+                }
+            }
+
+            async runAllTests() {
+                this.clear();
+                this.log('🚀 Iniciando pruebas de despliegue...', 'info');
+                
+                const results = {
+                    environment: await this.testEnvironmentDetection(),
+                    dataManager: await this.testDataManager(),
+                    persistence: await this.testDataPersistence(),
+                    localStorage: await this.testLocalStorage(),
+                    jsonLoading: await this.testJSONLoading()
+                };
+                
+                // Resumen final
+                const allPassed = Object.values(results).every(result => result !== null && result !== false);
+                this.log(`\n📋 Resumen: ${allPassed ? 'TODAS LAS PRUEBAS PASARON' : 'ALGUNAS PRUEBAS FALLARON'}`, 
+                    allPassed ? 'success' : 'error');
+                
+                if (allPassed) {
+                    this.log('✅ La aplicación debería funcionar correctamente en el entorno desplegado', 'success');
+                } else {
+                    this.log('⚠️ Algunas funcionalidades pueden no estar disponibles', 'warning');
+                }
+            }
+        }
+
+        const tester = new DeploymentTester();
+
+        function runAllTests() {
+            tester.runAllTests();
+        }
+
+        function clearResults() {
+            tester.clear();
+        }
+
+        // Ejecutar pruebas automáticamente al cargar
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                tester.log('Página cargada. Haz clic en "Ejecutar Todas las Pruebas" para comenzar.', 'info');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

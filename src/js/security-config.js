@@ -40,7 +40,7 @@ class SecurityConfig {
         
         // Configuración de localStorage
         this.LOCALSTORAGE_CONFIG = {
-            ENABLED: !this.IS_PRODUCTION,
+            ENABLED: !this.IS_PRODUCTION, // Habilitado en desarrollo y staging
             KEY: 'drAssistantData',
             MAX_AGE: 30 * 24 * 60 * 60 * 1000, // 30 días
             WARNING_THRESHOLD: 0.8 // 80% del límite
@@ -52,14 +52,36 @@ class SecurityConfig {
      */
     detectEnvironment() {
         const hostname = window.location.hostname;
+        const protocol = window.location.protocol;
         
+        // Desarrollo local
         if (hostname === 'localhost' || hostname === '127.0.0.1') {
             return 'development';
-        } else if (hostname.includes('staging') || hostname.includes('test')) {
+        }
+        
+        // Staging/test
+        if (hostname.includes('staging') || hostname.includes('test')) {
             return 'staging';
-        } else {
+        }
+        
+        // Servicios de hosting gratuitos (GitHub Pages, Netlify, Vercel, etc.)
+        if (hostname.includes('github.io') || 
+            hostname.includes('netlify.app') || 
+            hostname.includes('vercel.app') ||
+            hostname.includes('surge.sh') ||
+            hostname.includes('firebase.app') ||
+            hostname.includes('herokuapp.com') ||
+            protocol === 'file:') {
+            return 'staging'; // Tratar como staging para permitir localStorage
+        }
+        
+        // Solo marcar como producción si es un dominio real de producción
+        if (hostname.includes('.com') || hostname.includes('.org') || hostname.includes('.net')) {
             return 'production';
         }
+        
+        // Por defecto, tratar como staging
+        return 'staging';
     }
     
     /**
@@ -140,6 +162,11 @@ class SecurityConfig {
         if (this.IS_PRODUCTION) {
             console.warn('⚠️ SEGURIDAD: No usar localStorage en producción para datos médicos');
             return false;
+        }
+        
+        // En staging y desarrollo, permitir localStorage con advertencia
+        if (this.ENVIRONMENT === 'staging') {
+            console.warn('⚠️ MODO STAGING: Usando localStorage para datos de demostración');
         }
         
         try {
