@@ -59,19 +59,15 @@ class DashboardManager {
     }
 
     /**
-     * Simula carga de datos de usuario desde API
+     * Carga datos de usuario usando DataManager
      */
     async loadUserData() {
         try {
             // Simula delay de API
             await this.simulateApiDelay();
             
-            const response = await fetch('../data/users-db.json');
-            const data = await response.json();
-            
-            // Por ahora usa el usuario demo, en producción vendría del login
-            this.currentUser = data.users.find(user => user.email === 'demo@drasistente.com');
-            this.userData = data;
+            this.currentUser = await dataManager.getCurrentUser();
+            this.userData = await dataManager.loadData();
             
         } catch (error) {
             console.error('Error cargando datos de usuario:', error);
@@ -80,12 +76,12 @@ class DashboardManager {
     }
 
     /**
-     * Simula carga de datos de condiciones
+     * Carga datos de condiciones usando DataManager
      */
     async loadConditionsData() {
         try {
             await this.simulateApiDelay();
-            this.conditionsData = this.userData.conditions;
+            this.conditionsData = await dataManager.getConditions();
         } catch (error) {
             console.error('Error cargando condiciones:', error);
             throw error;
@@ -93,12 +89,12 @@ class DashboardManager {
     }
 
     /**
-     * Simula carga de datos de síntomas
+     * Carga datos de síntomas usando DataManager
      */
     async loadSymptomsData() {
         try {
             await this.simulateApiDelay();
-            this.symptomsData = this.userData.symptoms;
+            this.symptomsData = await dataManager.getAllSymptoms();
         } catch (error) {
             console.error('Error cargando síntomas:', error);
             throw error;
@@ -106,12 +102,12 @@ class DashboardManager {
     }
 
     /**
-     * Simula carga de datos de registros
+     * Carga datos de registros usando DataManager
      */
     async loadRecordsData() {
         try {
             await this.simulateApiDelay();
-            this.recordsData = this.userData.symptomRecords;
+            this.recordsData = await dataManager.getSymptomRecords();
         } catch (error) {
             console.error('Error cargando registros:', error);
             throw error;

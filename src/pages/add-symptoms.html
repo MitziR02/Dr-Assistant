@@ -101,6 +101,14 @@
 
             <!-- Mensajes de estado -->
             <div id="messageContainer" class="message-container"></div>
+            
+            <!-- Icono de carga -->
+            <div id="loadingOverlay" class="loading-overlay hidden">
+                <div class="loading-spinner">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Cargando datos...</p>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -169,6 +177,9 @@
     </template>
 
     <!-- Scripts -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/security-config.js"></script>
+    <script src="../js/data-manager.js"></script>
     <script src="../js/add-symptoms.js"></script>
 </body>
 </html>

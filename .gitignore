@@ -41,3 +41,10 @@ build/
 # Archivos temporales
 *.tmp
 *.temp
+
+# Carpeta de testing (archivos de desarrollo)
+testing/
+
+# Documentación (excepto README principal)
+docs/
+*.md
